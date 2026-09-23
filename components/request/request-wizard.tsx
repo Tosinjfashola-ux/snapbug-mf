@@ -1,11 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import { Car, Sailboat, ArrowRight, ArrowLeft, Check } from 'lucide-react'
+import { Car, Sailboat, Bike, Waves, ArrowRight, ArrowLeft, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-type AssetType = 'car' | 'boat'
+type AssetType = 'car' | 'boat' | 'motorbike' | 'jetski'
+
+const ASSET_LABEL: Record<AssetType, string> = {
+  car: 'car',
+  boat: 'boat',
+  motorbike: 'motorbike',
+  jetski: 'jet ski',
+}
+
+const usesHours = (t: AssetType) => t === 'boat' || t === 'jetski'
 
 const STEPS = ['Asset', 'Details', 'Delivery', 'Contact'] as const
 
@@ -51,7 +60,7 @@ export function RequestWizard({
         </h2>
         <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">
           Thank you, {data.name || 'there'}. Our sourcing team will review your
-          brief for a {data.assetType} and send a curated shortlist with landed
+          brief for a {ASSET_LABEL[data.assetType]} and send a curated shortlist with landed
           cost estimates, typically within two business days.
         </p>
         <div className="mt-6 rounded-2xl bg-secondary px-6 py-4 text-left text-sm">
@@ -122,6 +131,8 @@ export function RequestWizard({
                 [
                   { key: 'car', label: 'A car', icon: Car },
                   { key: 'boat', label: 'A boat', icon: Sailboat },
+                  { key: 'motorbike', label: 'A motorbike', icon: Bike },
+                  { key: 'jetski', label: 'A jet ski', icon: Waves },
                 ] as const
               ).map((opt) => (
                 <button
@@ -131,11 +142,11 @@ export function RequestWizard({
                   className={cn(
                     'flex flex-col items-center gap-3 rounded-2xl border p-8 transition-all',
                     data.assetType === opt.key
-                      ? 'border-foreground bg-secondary'
-                      : 'border-border hover:border-foreground/30',
+                      ? 'border-gold bg-gold/10 ring-1 ring-gold'
+                      : 'border-border hover:border-gold/40 hover:bg-secondary',
                   )}
                 >
-                  <opt.icon className="size-8" />
+                  <opt.icon className={cn('size-8 transition-colors', data.assetType === opt.key && 'text-gold')} />
                   <span className="font-medium">{opt.label}</span>
                 </button>
               ))}
@@ -148,13 +159,21 @@ export function RequestWizard({
             <div className="grid gap-5 sm:grid-cols-2">
               <Field
                 label="Preferred make"
-                placeholder={data.assetType === 'car' ? 'Mercedes-Benz' : 'Azimut'}
+                placeholder={
+                  { car: 'Mercedes-Benz', boat: 'Azimut', motorbike: 'Ducati', jetski: 'Sea-Doo' }[
+                    data.assetType
+                  ]
+                }
                 value={data.make}
                 onChange={(v) => set('make', v)}
               />
               <Field
                 label="Model"
-                placeholder={data.assetType === 'car' ? 'GLE 450' : '62 Flybridge'}
+                placeholder={
+                  { car: 'GLE 450', boat: '62 Flybridge', motorbike: 'Panigale V4', jetski: 'GTX 300' }[
+                    data.assetType
+                  ]
+                }
                 value={data.model}
                 onChange={(v) => set('model', v)}
               />
@@ -177,8 +196,8 @@ export function RequestWizard({
                 onChange={(v) => set('colour', v)}
               />
               <Field
-                label={data.assetType === 'car' ? 'Max mileage' : 'Max engine hours'}
-                placeholder={data.assetType === 'car' ? '20,000 mi' : '500 hrs'}
+                label={usesHours(data.assetType) ? 'Max engine hours' : 'Max mileage'}
+                placeholder={usesHours(data.assetType) ? '500 hrs' : '20,000 mi'}
                 value={data.mileage}
                 onChange={(v) => set('mileage', v)}
               />
@@ -239,7 +258,7 @@ export function RequestWizard({
             <div className="mt-6 rounded-2xl bg-secondary p-5 text-sm">
               <p className="font-medium">Request summary</p>
               <p className="mt-2 text-muted-foreground">
-                {data.assetType === 'car' ? 'Car' : 'Boat'}
+                <span className="capitalize">{ASSET_LABEL[data.assetType]}</span>
                 {data.make && ` · ${data.make}`}
                 {data.model && ` ${data.model}`}
                 {data.budget && ` · ${data.budget}`}

@@ -15,6 +15,8 @@ const COLUMNS = [
     links: [
       { href: '/cars', label: 'Cars' },
       { href: '/boats', label: 'Boats' },
+      { href: '/motorbikes', label: 'Motorbikes' },
+      { href: '/jetskis', label: 'Jet Skis' },
       { href: '/options', label: 'Sourced Options' },
       { href: '/track', label: 'Track My Order' },
     ],
@@ -36,15 +38,15 @@ export function SiteFooter() {
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5">
-              <span className="flex size-9 items-center justify-center rounded-full border border-white/30 font-serif text-[0.95rem] font-semibold">
-                M
+              <span className="flex size-9 items-center justify-center rounded-full bg-gold font-serif text-[0.95rem] font-semibold text-gold-foreground">
+                S
               </span>
-              <span className="font-serif text-lg font-semibold">Meridian & Co.</span>
+              <span className="font-serif text-lg font-semibold">Snapbug</span>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-primary-foreground/70">
-              A white-glove sourcing and logistics house. You name the car or
-              the boat — we find it, buy it, ship it across oceans, clear
-              customs and deliver it to your door.
+              A white-glove sourcing and logistics house. You name the car,
+              boat, motorbike or jet ski — we find it, buy it, ship it across
+              oceans, clear customs and deliver it to your door.
             </p>
             <div className="mt-6 flex items-center gap-2 text-sm text-primary-foreground/60">
               <Anchor className="size-4 text-gold" />
@@ -74,7 +76,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-xs text-primary-foreground/50 sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} Meridian & Co. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Snapbug. All rights reserved.</p>
           <p className="flex gap-6">
             <span>Privacy Policy</span>
             <span>Terms of Service</span>

@@ -69,15 +69,15 @@
 
   --border: oklch(0.9 0.006 75);
   --input: oklch(0.9 0.006 75);
-  --ring: oklch(0.62 0.06 65);
+  --ring: oklch(0.72 0.16 65);
 
-  /* muted bronze / champagne gold */
-  --gold: oklch(0.63 0.065 68);
-  --gold-foreground: oklch(0.99 0.004 85);
-  /* deep muted navy */
-  --navy: oklch(0.34 0.045 250);
+  /* vibrant amber gold */
+  --gold: oklch(0.74 0.17 68);
+  --gold-foreground: oklch(0.24 0.03 68);
+  /* vivid electric blue */
+  --navy: oklch(0.55 0.19 255);
   /* warm sand tint */
-  --sand: oklch(0.93 0.014 80);
+  --sand: oklch(0.93 0.02 80);
 }
 
 @layer base {

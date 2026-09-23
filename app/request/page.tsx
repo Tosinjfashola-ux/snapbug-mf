@@ -14,7 +14,10 @@ export default async function RequestPage({
   searchParams: Promise<{ type?: string }>
 }) {
   const { type } = await searchParams
-  const defaultAsset = type === 'boat' ? 'boat' : 'car'
+  const valid = ['car', 'boat', 'motorbike', 'jetski'] as const
+  const defaultAsset = (valid as readonly string[]).includes(type ?? '')
+    ? (type as (typeof valid)[number])
+    : 'car'
 
   return (
     <>

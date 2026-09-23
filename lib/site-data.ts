@@ -235,7 +235,7 @@ export type Boat = {
 export const BOATS: Boat[] = [
   {
     id: 'motor-yacht',
-    name: 'Meridian 62 Motor Yacht',
+    name: 'Azure 62 Motor Yacht',
     type: 'Motor Yacht',
     manufacturer: 'Azimut',
     year: 2022,
@@ -274,6 +274,126 @@ export const BOATS: Boat[] = [
     price: '$540,000',
     landed: '$611,000',
     spec: 'Sloop rig · 3 cabins · Blue water ready',
+  },
+]
+
+export type Motorbike = {
+  id: string
+  name: string
+  make: string
+  model: string
+  year: number
+  category: string
+  image: string
+  mileage: string
+  location: string
+  price: string
+  landed: string
+  spec: string
+}
+
+export const MOTORBIKES: Motorbike[] = [
+  {
+    id: 'panigale',
+    name: 'Ducati Panigale V4 S',
+    make: 'Ducati',
+    model: 'Panigale V4 S',
+    year: 2024,
+    category: 'Superbike',
+    image: '/images/bike-sport.png',
+    mileage: '1,900 mi',
+    location: 'Bologna, IT',
+    price: '$32,400',
+    landed: '$38,900',
+    spec: '1103cc V4 · Ducati Red · Öhlins',
+  },
+  {
+    id: 'road-glide',
+    name: 'Harley-Davidson Road Glide',
+    make: 'Harley-Davidson',
+    model: 'Road Glide Special',
+    year: 2023,
+    category: 'Cruiser',
+    image: '/images/bike-cruiser.png',
+    mileage: '4,600 mi',
+    location: 'Milwaukee, US',
+    price: '$28,900',
+    landed: '$34,700',
+    spec: 'Milwaukee-Eight 114 · Baja Orange · Chrome',
+  },
+  {
+    id: 'gs-1250',
+    name: 'BMW R 1250 GS Adventure',
+    make: 'BMW',
+    model: 'R 1250 GS Adventure',
+    year: 2024,
+    category: 'Adventure Touring',
+    image: '/images/bike-adventure.png',
+    mileage: '3,100 mi',
+    location: 'Munich, DE',
+    price: '$21,700',
+    landed: '$26,400',
+    spec: '1254cc Boxer · Racing Blue · Full panniers',
+  },
+]
+
+export type JetSki = {
+  id: string
+  name: string
+  make: string
+  model: string
+  year: number
+  category: string
+  image: string
+  hours: string
+  location: string
+  price: string
+  landed: string
+  spec: string
+}
+
+export const JETSKIS: JetSki[] = [
+  {
+    id: 'gtx-limited',
+    name: 'Sea-Doo GTX Limited 300',
+    make: 'Sea-Doo',
+    model: 'GTX Limited 300',
+    year: 2024,
+    category: 'Luxury Runabout',
+    image: '/images/jetski-yellow.png',
+    hours: '22 hrs',
+    location: 'Valcourt, CA',
+    price: '$19,800',
+    landed: '$24,200',
+    spec: '1630cc Rotax · Neon Yellow · 3-seater',
+  },
+  {
+    id: 'gp1800',
+    name: 'Yamaha GP1800R SVHO',
+    make: 'Yamaha',
+    model: 'GP1800R SVHO',
+    year: 2023,
+    category: 'Performance',
+    image: '/images/jetski-blue.png',
+    hours: '35 hrs',
+    location: 'Shizuoka, JP',
+    price: '$17,600',
+    landed: '$21,900',
+    spec: '1812cc Supercharged · Cyan Blue · Race hull',
+  },
+  {
+    id: 'rxt-x',
+    name: 'Sea-Doo RXT-X 325',
+    make: 'Sea-Doo',
+    model: 'RXT-X 325',
+    year: 2024,
+    category: 'Performance',
+    image: '/images/jetski-red.png',
+    hours: '14 hrs',
+    location: 'Miami, US',
+    price: '$21,300',
+    landed: '$25,800',
+    spec: '1630cc Rotax 325 · Fiery Red · T3-R hull',
   },
 ]
 
@@ -349,7 +469,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
     items: [
       {
         q: 'Are you a dealership?',
-        a: 'No. We are a sourcing and logistics partner. You tell us the car or boat you want, and we find it, purchase it on your behalf, and manage shipping, clearing and delivery. You are never left to coordinate sellers, ports or customs yourself.',
+        a: 'No. Snapbug is a sourcing and logistics partner. You tell us the car, boat, motorbike or jet ski you want, and we find it, purchase it on your behalf, and manage shipping, clearing and delivery. You are never left to coordinate sellers, ports or customs yourself.',
       },
       {
         q: 'Can you find a specific make, model and year?',

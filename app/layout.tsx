@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { HelpChat } from '@/components/help-chat'
 import './globals.css'
 
 const playfair = Playfair_Display({
@@ -19,11 +20,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Meridian & Co. — Global Vehicle Sourcing, Shipping & Delivery',
-    template: '%s | Meridian & Co.',
+    default: 'Snapbug — Global Vehicle Sourcing, Shipping & Delivery',
+    template: '%s | Snapbug',
   },
   description:
-    'Tell us what you want. We source, purchase, ship, clear customs and deliver premium cars and boats to your doorstep — anywhere in the world.',
+    'Tell us what you want. Snapbug sources, purchases, ships, clears customs and delivers premium cars, boats, motorbikes and jet skis to your doorstep — anywhere in the world.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -51,6 +52,7 @@ export default function RootLayout({
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
+        <HelpChat />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
