@@ -42,8 +42,14 @@ export function Hero() {
           )}
         />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-primary/35" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/30 to-transparent" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.12) 45%, transparent 70%), linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 55%)',
+        }}
+      />
 
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-28 sm:px-8 lg:pb-24">
         <div className="max-w-3xl">
