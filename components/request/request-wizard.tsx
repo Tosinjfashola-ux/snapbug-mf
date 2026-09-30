@@ -3,9 +3,21 @@
 import { useState } from 'react'
 import { Car, Sailboat, Bike, Waves, ArrowRight, ArrowLeft, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Combobox } from '@/components/combobox'
 import { cn } from '@/lib/utils'
-
-type AssetType = 'car' | 'boat' | 'motorbike' | 'jetski'
+import {
+  type AssetType,
+  MAKES,
+  MODELS,
+  YEARS,
+  BUDGETS,
+  COLOURS,
+  MILEAGE,
+  HOURS,
+  COUNTRIES,
+  CITIES,
+  DIAL_CODES,
+} from '@/lib/form-options'
 
 const ASSET_LABEL: Record<AssetType, string> = {
   car: 'car',
@@ -22,7 +34,8 @@ const initial = {
   assetType: 'car' as AssetType,
   make: '',
   model: '',
-  yearRange: '',
+  yearFrom: '',
+  yearTo: '',
   budget: '',
   colour: '',
   mileage: '',
@@ -30,6 +43,7 @@ const initial = {
   city: '',
   name: '',
   email: '',
+  dialCode: '+233 Ghana',
   phone: '',
   notes: '',
 }
@@ -96,7 +110,7 @@ export function RequestWizard({
                 className={cn(
                   'flex size-8 shrink-0 items-center justify-center rounded-full border text-xs font-semibold transition-colors',
                   i < step && 'border-gold bg-gold text-gold-foreground',
-                  i === step && 'border-foreground bg-foreground text-background',
+                  i === step && 'border-primary bg-primary text-primary-foreground',
                   i > step && 'border-border text-muted-foreground',
                 )}
               >
@@ -138,7 +152,13 @@ export function RequestWizard({
                 <button
                   key={opt.key}
                   type="button"
-                  onClick={() => set('assetType', opt.key)}
+                  onClick={() =>
+                    setData((d) =>
+                      d.assetType === opt.key
+                        ? d
+                        : { ...d, assetType: opt.key, make: '', model: '', budget: '', mileage: '' },
+                    )
+                  }
                   className={cn(
                     'flex flex-col items-center gap-3 rounded-2xl border p-8 transition-all',
                     data.assetType === opt.key
@@ -157,47 +177,55 @@ export function RequestWizard({
         {step === 1 && (
           <Step title="Tell us the details">
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field
+              <Combobox
                 label="Preferred make"
-                placeholder={
-                  { car: 'Mercedes-Benz', boat: 'Azimut', motorbike: 'Ducati', jetski: 'Sea-Doo' }[
-                    data.assetType
-                  ]
-                }
+                placeholder="Search makes…"
+                options={MAKES[data.assetType]}
                 value={data.make}
-                onChange={(v) => set('make', v)}
+                onChange={(v) => setData((d) => ({ ...d, make: v, model: v === d.make ? d.model : '' }))}
               />
-              <Field
+              <Combobox
                 label="Model"
-                placeholder={
-                  { car: 'GLE 450', boat: '62 Flybridge', motorbike: 'Panigale V4', jetski: 'GTX 300' }[
-                    data.assetType
-                  ]
-                }
+                placeholder={data.make ? 'Search models…' : 'Choose a make first'}
+                options={MODELS[data.make] ?? []}
+                emptyText="Type your model"
                 value={data.model}
                 onChange={(v) => set('model', v)}
               />
-              <Field
-                label="Year range"
-                placeholder="2022 – 2024"
-                value={data.yearRange}
-                onChange={(v) => set('yearRange', v)}
+              <Combobox
+                label="Year from"
+                placeholder="Oldest year"
+                options={data.yearTo ? YEARS.filter((y) => y <= data.yearTo) : YEARS}
+                allowCustom={false}
+                value={data.yearFrom}
+                onChange={(v) => set('yearFrom', v)}
               />
-              <Field
+              <Combobox
+                label="Year to"
+                placeholder="Newest year"
+                options={data.yearFrom ? YEARS.filter((y) => y >= data.yearFrom) : YEARS}
+                allowCustom={false}
+                value={data.yearTo}
+                onChange={(v) => set('yearTo', v)}
+              />
+              <Combobox
                 label="Budget (USD)"
-                placeholder="$50,000 – $70,000"
+                placeholder="Select a range"
+                options={BUDGETS[data.assetType]}
                 value={data.budget}
                 onChange={(v) => set('budget', v)}
               />
-              <Field
+              <Combobox
                 label="Colour preference"
-                placeholder="Obsidian black"
+                placeholder="Search colours…"
+                options={COLOURS}
                 value={data.colour}
                 onChange={(v) => set('colour', v)}
               />
-              <Field
+              <Combobox
                 label={usesHours(data.assetType) ? 'Max engine hours' : 'Max mileage'}
-                placeholder={usesHours(data.assetType) ? '500 hrs' : '20,000 mi'}
+                placeholder="Select a limit"
+                options={usesHours(data.assetType) ? HOURS : MILEAGE}
                 value={data.mileage}
                 onChange={(v) => set('mileage', v)}
               />
@@ -208,15 +236,18 @@ export function RequestWizard({
         {step === 2 && (
           <Step title="Where should it be delivered?">
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field
+              <Combobox
                 label="Destination country"
-                placeholder="Ghana"
+                placeholder="Search countries…"
+                options={COUNTRIES}
                 value={data.country}
-                onChange={(v) => set('country', v)}
+                onChange={(v) => setData((d) => ({ ...d, country: v, city: v === d.country ? d.city : '' }))}
               />
-              <Field
+              <Combobox
                 label="Destination city"
-                placeholder="Accra"
+                placeholder={data.country ? 'Search cities…' : 'Choose a country first'}
+                options={CITIES[data.country] ?? []}
+                emptyText="Type your city"
                 value={data.city}
                 onChange={(v) => set('city', v)}
               />
@@ -247,9 +278,18 @@ export function RequestWizard({
                 value={data.email}
                 onChange={(v) => set('email', v)}
               />
+              <Combobox
+                label="Country code"
+                placeholder="Search codes…"
+                options={DIAL_CODES}
+                allowCustom={false}
+                value={data.dialCode}
+                onChange={(v) => set('dialCode', v)}
+              />
               <Field
                 label="Phone / WhatsApp"
-                placeholder="+233 …"
+                type="tel"
+                placeholder="24 123 4567"
                 value={data.phone}
                 onChange={(v) => set('phone', v)}
               />
@@ -261,6 +301,8 @@ export function RequestWizard({
                 <span className="capitalize">{ASSET_LABEL[data.assetType]}</span>
                 {data.make && ` · ${data.make}`}
                 {data.model && ` ${data.model}`}
+                {(data.yearFrom || data.yearTo) &&
+                  ` · ${data.yearFrom || 'Any'}–${data.yearTo || 'Any'}`}
                 {data.budget && ` · ${data.budget}`}
                 {data.country && ` · to ${data.city ? `${data.city}, ` : ''}${data.country}`}
               </p>

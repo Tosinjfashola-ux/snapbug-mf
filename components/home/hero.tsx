@@ -42,8 +42,8 @@ export function Hero() {
           )}
         />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/55" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-primary/35" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/30 to-transparent" />
 
       <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-28 sm:px-8 lg:pb-24">
         <div className="max-w-3xl">

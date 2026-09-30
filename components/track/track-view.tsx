@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Search, Download, FileText, Ship } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Combobox } from '@/components/combobox'
 import { OrderTimeline } from '@/components/track/order-timeline'
 import { cn } from '@/lib/utils'
 import { ORDER_STAGES, SAMPLE_ORDER, DOCUMENTS } from '@/lib/site-data'
@@ -38,16 +39,16 @@ export function TrackView() {
         onSubmit={handleSubmit}
         className="mx-auto flex max-w-xl flex-col gap-3 sm:flex-row"
       >
-        <div className="relative flex-1">
-          <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            value={reference}
-            onChange={(e) => setReference(e.target.value)}
-            placeholder="Enter your order reference (try DEMO)"
-            aria-label="Order reference"
-            className="h-12 w-full rounded-full border border-border bg-card pl-11 pr-4 text-sm outline-none transition-colors focus:border-foreground/40"
-          />
-        </div>
+        <Combobox
+          className="flex-1"
+          ariaLabel="Order reference"
+          icon={<Search className="size-4" />}
+          placeholder="Enter your order reference (try DEMO)"
+          options={[SAMPLE_ORDER.reference, 'DEMO']}
+          value={reference}
+          onChange={setReference}
+          inputClassName="rounded-full bg-card"
+        />
         <Button type="submit" size="lg" className="h-12 rounded-full px-7">
           Track Order
         </Button>
